@@ -1,3 +1,4 @@
+from Stark2 import *
 from data_stark import lista_personajes
 
 # Desafío #03: (con biblioteca propia: stark_biblioteca) En base a lo resuelto en la parte 1, deberían crearse las siguientes funciones
@@ -106,16 +107,14 @@ def obtener_maximo(lista:list,key:str):#verifica que la key reprecente a un nume
     maximo_float = 0
     if lista == [""]:
         return False
-    for e_lista in lista:
-        dato = e_lista[key]
-        if dato.isalpha():
-            return False
-        elif  dato.isalpha() == False:
-            for i in range(len(lista)):
-                dato_float = float(lista[i][key])
-                if dato_float > maximo_float:
-                    maximo_float = dato_float
-    return maximo_float
+    for heroe in lista:
+        if isinstance(heroe, dict):
+            valor = heroe.get(key)
+            if valor is not None and (isinstance(valor, int) or isinstance(valor, float)):
+                if maximo_float is None or valor > maximo_float:
+                    maximo_float = valor
+    
+    return maximo_float if maximo_float is not None else False
 
 #____________________________________________________________________________________________
 # 3.2 Crear la función “obtener_minimo()” la cual recibirá como parámetro una lista y
@@ -230,14 +229,12 @@ def stark_imprimir_heroes(lista:list):#imprime la lista que se le pasa como argu
 
 def sumar_dato_heroe(lista:list,key:str):#devuelve la sumatoria de el la que que se le pase
     suma = 0
-    for e_lista in lista :
-        if type(e_lista) == dict:
-            if e_lista == {""}:
-                return False
-            elif e_lista[key].isalpha() == False:
-                suma += float(e_lista[key])
-            if e_lista[key].isalpha():
-                return False
+    for e_lista in lista:
+        if isinstance(e_lista, dict):
+            dato = e_lista.get(key)
+            if dato is not None:
+                if isinstance(dato, (int, float)):
+                    suma += dato
     return suma
 
 #______________________________________________________________________________
@@ -360,160 +357,131 @@ def stark_marvel_app(lista:list):
 # J. Listar todos los superhéroes agrupados por color de ojos.
 # K. Listar todos los superhéroes agrupados por tipo de inteligencia
 
+normalizado = False  # Variable para controlar si los datos están normalizados
 
-    while True:
+while True:
+    opcion = stark_menu_principal()
+    while opcion == False:  
+        print("ERROR INGRESE UN DATO VÁLIDO")
         opcion = stark_menu_principal()
-        while opcion == False:  
-            print("ERROR INGRESE DE EL DATO VUELTA")
-            opcion = stark_menu_principal()
-        match opcion:
-            case 1:
-                print(stark_normalizar_datos(lista))
-            case 2:
-                imprimir_nombres_genero_NB(lista)
-            case 3:
-                superheroe_mas_alto_genero_F(lista)
-            case 4:
-                superheroe_mas_alto_genero_M(lista)
-            case 5:
-                superheroe_mas_debil_genero_M(lista)
-            case 6:
-                superheroe_mas_debil_genero_NB(lista)
-            case 7:
-                fuerza_promedio_genero_NB(lista)
-            case 8:
-                contar_color_ojos(lista)
-            case 9:
-                contar_color_pelo(lista)
-            case 10:
-                listar_superheroes_por_color_ojos(lista)
-            case 11:
-                listar_superheroes_por_inteligencia(lista)
 
-# A. Normalizar datos
-# Esta función ya la tienes implementada como "stark_normalizar_datos" y se ejecuta en el caso 1 del menú principal.
-
-# B. Recorrer la lista e imprimir los nombres de superhéroes de género NB
-def imprimir_nombres_genero_NB(lista:list):
-    for heroe in lista:
-        if heroe.get("genero", "").lower() == "nb":
-            print(heroe.get("nombre", "Nombre Desconocido"))
-
-# C. Recorrer la lista y determinar cuál es el superhéroe más alto de género F
-def superheroe_mas_alto_genero_F(lista:list):
-    altura_max = -1
-    nombre_superheroe = ""
-    for heroe in lista:
-        if heroe.get("genero", "").lower() == "f" and heroe.get("altura", 0) > altura_max:
-            altura_max = heroe.get("altura", 0)
-            nombre_superheroe = heroe.get("nombre", "Nombre Desconocido")
-    if nombre_superheroe:
-        print(f"El superhéroe más alto de género F es {nombre_superheroe} con una altura de {altura_max} cm.")
-    else:
-        print("No se encontraron superhéroes de género F.")
-
-# D. Recorrer la lista y determinar cuál es el superhéroe más alto de género M
-def superheroe_mas_alto_genero_M(lista:list):
-    altura_max = -1
-    nombre_superheroe = ""
-    for heroe in lista:
-        if heroe.get("genero", "").lower() == "m" and heroe.get("altura", 0) > altura_max:
-            altura_max = heroe.get("altura", 0)
-            nombre_superheroe = heroe.get("nombre", "Nombre Desconocido")
-    if nombre_superheroe:
-        print(f"El superhéroe más alto de género M es {nombre_superheroe} con una altura de {altura_max} cm.")
-    else:
-        print("No se encontraron superhéroes de género M.")
-
-# E. Recorrer la lista y determinar cuál es el superhéroe más débil de género M
-def superheroe_mas_debil_genero_M(lista:list):
-    fuerza_min = float("inf")
-    nombre_superheroe = ""
-    for heroe in lista:
-        if heroe.get("genero", "").lower() == "m" and heroe.get("fuerza", 0) < fuerza_min:
-            fuerza_min = heroe.get("fuerza", 0)
-            nombre_superheroe = heroe.get("nombre", "Nombre Desconocido")
-    if nombre_superheroe:
-        print(f"El superhéroe más débil de género M es {nombre_superheroe} con una fuerza de {fuerza_min}.")
-    else:
-        print("No se encontraron superhéroes de género M.")
-
-# F. Recorrer la lista y determinar cuál es el superhéroe más débil de género NB
-def superheroe_mas_debil_genero_NB(lista:list):
-    fuerza_min = float("inf")
-    nombre_superheroe = ""
-    for heroe in lista:
-        if heroe.get("genero", "").lower() == "nb" and heroe.get("fuerza", 0) < fuerza_min:
-            fuerza_min = heroe.get("fuerza", 0)
-            nombre_superheroe = heroe.get("nombre", "Nombre Desconocido")
-    if nombre_superheroe:
-        print(f"El superhéroe más débil de género NB es {nombre_superheroe} con una fuerza de {fuerza_min}.")
-    else:
-        print("No se encontraron superhéroes de género NB.")
-
-# G. Recorrer la lista y determinar la fuerza promedio de los superhéroes de género NB
-def fuerza_promedio_genero_NB(lista:list):
-    total_fuerza = 0
-    cantidad_superheroes = 0
-    for heroe in lista:
-        if heroe.get("genero", "").lower() == "nb":
-            total_fuerza += heroe.get("fuerza", 0)
-            cantidad_superheroes += 1
-    if cantidad_superheroes > 0:
-        promedio = total_fuerza / cantidad_superheroes
-        print(f"La fuerza promedio de los superhéroes de género NB es {promedio}.")
-    else:
-        print("No se encontraron superhéroes de género NB.")
-
-# H. Determinar cuántos superhéroes tienen cada tipo de color de ojos.
-def contar_color_ojos(lista:list):
-    color_ojos_contador = {}
-    for heroe in lista:
-        color_ojos = heroe.get("color_ojos", "Desconocido")
-        if color_ojos in color_ojos_contador:
-            color_ojos_contador[color_ojos] += 1
+    if opcion == 1:
+        if not normalizado:
+            normalizado = stark_normalizar_datos(lista_personajes)
+            if normalizado:
+                print("Datos Normalizados")
+            else:
+                print("Hubo un error al normalizar los datos. Verifique que la lista no esté vacía o que los datos no se hayan normalizado anteriormente.")
         else:
-            color_ojos_contador[color_ojos] = 1
-    print("Conteo de superhéroes por color de ojos:")
-    for color, cantidad in color_ojos_contador.items():
-        print(f"{color}: {cantidad} superhéroes")
-
-# I. Determinar cuántos superhéroes tienen cada tipo de color de pelo.
-def contar_color_pelo(lista:list):
-    color_pelo_contador = {}
-    for heroe in lista:
-        color_pelo = heroe.get("color_pelo", "Desconocido")
-        if color_pelo in color_pelo_contador:
-            color_pelo_contador[color_pelo] += 1
-        else:
-            color_pelo_contador[color_pelo] = 1
-    print("Conteo de superhéroes por color de pelo:")
-    for color, cantidad in color_pelo_contador.items():
-        print(f"{color}: {cantidad} superhéroes")
+            print("Los datos ya han sido normalizados previamente.")
     
-#J. Listar todos los superhéroes agrupados por color de ojos.
-def listar_superheroes_por_color_ojos(lista:list):
-    superheroes_por_color_ojos = {}
-    for heroe in lista:
-        color_ojos = heroe.get("color_ojos", "Desconocido")
-        if color_ojos in superheroes_por_color_ojos:
-            superheroes_por_color_ojos[color_ojos].append(heroe["nombre"])
+    elif opcion == 2:
+        if not normalizado:
+            print("Debe normalizar los datos primero (opción A).")
         else:
-            superheroes_por_color_ojos[color_ojos] = [heroe["nombre"]]
-    print("Superhéroes agrupados por color de ojos:")
-    for color, superheroes in superheroes_por_color_ojos.items():
-        print(f"{color}: {', '.join(superheroes)}")
+            for personaje in lista_personajes:
+                if personaje["genero"] == "NB":
+                    print(f"Nombre: {personaje['nombre']}")
         
-#K. Listar todos los superhéroes agrupados por tipo de inteligencia.
-
-def listar_superheroes_por_inteligencia(lista:list):
-    superheroes_por_inteligencia = {}
-    for heroe in lista:
-        tipo_inteligencia = heroe.get("tipo_inteligencia", "Desconocido")
-        if tipo_inteligencia in superheroes_por_inteligencia:
-            superheroes_por_inteligencia[tipo_inteligencia].append(heroe["nombre"])
+    elif opcion == 3:
+        if not normalizado:
+            print("Debe normalizar los datos primero (opción A).")
         else:
-            superheroes_por_inteligencia[tipo_inteligencia] = [heroe["nombre"]]
-    print("Superhéroes agrupados por tipo de inteligencia:")
-    for inteligencia, superheroes in superheroes_por_inteligencia.items():
-        print(f"{inteligencia}: {', '.join(superheroes)}")
+            superheroe_mas_alto_F = f_mas_alta(lista_personajes)
+            if superheroe_mas_alto_F:
+                print(f"El superhéroe más alto de género F es: {superheroe_mas_alto_F['nombre']} con una altura de {superheroe_mas_alto_F['altura']} cm.")
+    
+    elif opcion == 4:
+        if not normalizado:
+            print("Debe normalizar los datos primero (opción A).")
+        else:
+            superheroe_mas_alto_M = m_mas_alta(lista_personajes)
+            if superheroe_mas_alto_M:
+                print(f"El superhéroe más alto de género M es: {superheroe_mas_alto_M['nombre']} con una altura de {superheroe_mas_alto_M['altura']} cm.")
+            else:
+                print("No se encontraron superhéroes de género M.")
+    
+    elif opcion == 5:
+        if not normalizado:
+            print("Debe normalizar los datos primero (opción A).")
+        else:
+            superheroe_mas_debil_M = m_mas_debil(lista_personajes)
+            if superheroe_mas_debil_M:
+                print(f"El superhéroe más débil de género M es: {superheroe_mas_debil_M['nombre']} con una fuerza de {superheroe_mas_debil_M['fuerza']}.")
+            else:
+                print("No se encontraron superhéroes de género M.")
+    
+    elif opcion == 6:
+        if not normalizado:
+            print("Debe normalizar los datos primero (opción A).")
+        else:
+            superheroe_mas_debil_NB = nb_mas_debil(lista_personajes)
+            if superheroe_mas_debil_NB:
+                print(f"El superhéroe más débil de género NB es: {superheroe_mas_debil_NB['nombre']} con una fuerza de {superheroe_mas_debil_NB['fuerza']}.")
+            else:
+                print("No se encontraron superhéroes de género NB.")
+    
+    elif opcion == 7:
+        if not normalizado:
+            print("Debe normalizar los datos primero (opción A).")
+        else:
+            fuerza_promedio_NB = calcular_promedio(lista_personajes, "fuerza")
+            if fuerza_promedio_NB:
+                print(f"La fuerza promedio de los superhéroes de género NB es: {fuerza_promedio_NB}")
+            else:
+                print("No se encontraron superhéroes de género NB.")
+
+    
+    elif opcion == 8:
+        if not normalizado:
+            print("Debe normalizar los datos primero (opción A).")
+        else:
+            color_de_ojos = contador_color_ojos(lista_personajes)
+            if color_de_ojos:
+                for color, cantidad in color_de_ojos.items():
+                    print(f"Hay {cantidad} superhéroes con color de ojos {color}.")
+                else:
+                    print("No se encontraron datos de color de ojos.")
+    
+    elif opcion == 9:
+        if not normalizado:
+            print("Debe normalizar los datos primero (opción A).")
+        else:
+            color_de_pelo = contador_color_pelo(lista_personajes)
+            if color_de_pelo:
+                for color, cantidad in color_de_pelo.items():
+                    print(f"Hay {cantidad} superhéroes con color de pelo {color}.")
+                else:
+                    print("No se encontraron datos de color de pelo.")
+    
+    elif opcion == 10:
+        if not normalizado:
+            print("Debe normalizar los datos primero (opción A).")
+        else:
+            superheroes_por_color_ojos = agrupacio_superheroes_ojos(lista_personajes)
+            if superheroes_por_color_ojos:
+                for color, superheroes in superheroes_por_color_ojos.items():
+                    print(f"Superhéroes con color de ojos {color}:")
+                    for heroe in superheroes:
+                        print(f"Nombre: {heroe['nombre']}")
+                else:
+                    print("No se encontraron datos de color de ojos.")
+    
+    elif opcion == 11:
+        if not normalizado:
+            print("Debe normalizar los datos primero (opción A).")
+        else:
+            superheroes_por_inteligencia = agrupacion_por_inteligencia(lista_personajes)
+            if superheroes_por_inteligencia:
+                for inteligencia, superheroes in superheroes_por_inteligencia.items():
+                    print(f"Superhéroes con inteligencia {inteligencia}:")
+                    for heroe in superheroes:
+                        print(f"Nombre: {heroe['nombre']}")
+                else:
+                    print("No se encontraron datos de tipo de inteligencia.")
+    
+    elif opcion == 0:
+        break
+    
+    else:
+        print("Opción no válida. Por favor, ingrese un número del 1 al 11.")

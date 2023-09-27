@@ -200,7 +200,7 @@ def agrupacion_por_inteligencia(lista:list):
                 nada.append(nombre_super)
     print(f"{high} tienen nivel de inteligencia alta \n{average} tienen nivel de inteligencia promedio \n{good} tienen nivel de inteligencia buena \n{nada} tiene niuvel de inteligencia nulo")
 
-while True:
+""" while True:
     opcion = input("A el nombre de cada superhéroe de género NB \nB cuál es el superhéroe más alto de género F \nC el superhéroe más alto de género M \nD el superhéroe más débil de género M \nE el superhéroe más débil de género NB \nF el la fuerza promedio de los superhéroes de género NB \nG cuántos superhéroes tienen cada tipo de color de ojos \nH cuántos superhéroes tienen cada tipo de color de pelo \nI los superhéroes agrupados por color de ojos \nJ los superhéroes agrupados por tipo de inteligencia \nS (SALIR) ")
 
     match opcion:
@@ -225,5 +225,5 @@ while True:
         case "J" | "j":
             agrupacion_por_inteligencia(lista_personajes)
         case "S" | "s" :
-            break
+            break """
 
