@@ -23,6 +23,7 @@ pygame.init() #Se inicializa pygame
 pygame.mixer.init()  # Inicializa el módulo de sonido de Pygame
 sonido_correcto = pygame.mixer.Sound("y2mate.com - Sonido de pregunta correcta.mp3")
 sonido_incorrecto = pygame.mixer.Sound("y2mate.com - SONIDO RESPUESTA INCORRECTA 1.mp3")
+musica_fondo = pygame.mixer.Sound("4kLOu3813BU_48.mp3")
 pantalla = pygame.display.set_mode([800, 600]) #Se crea una ventana
 pygame.display.set_caption("Preguntados")   #Se coloca titulo
 titulo = ""
@@ -40,11 +41,10 @@ rectangulo1 = pygame.Rect(100, 490, 200, 80)
 rectangulo2 = pygame.Rect(500, 490, 200, 80)
 
 # Texto para los rectángulos
-fuente = pygame.font.SysFont("Arial", 30)
+fuente = pygame.font.SysFont("Arial", 27)
 texto_rectangulo1 = fuente.render("Pregunta", True, COLOR_AZUL)
 texto_rectangulo2 = fuente.render("Reiniciar", True, COLOR_AZUL)
 #Definir textos
-fuente_opcion = pygame.font.SysFont("Arial", 25)
 fuente_opcion = pygame.font.SysFont("Arial", 25)
 fuente_texto_final = pygame.font.SysFont("Arial", 35)
 texto_titulo = fuente.render(str(titulo), True, (COLOR_BLANCO))
@@ -69,8 +69,8 @@ for e_lista in lista:
     lista_preguntas.append(e_lista["pregunta"])
     respueestas_correctas.append(e_lista["correcta"])
 
-
-
+musica_fondo.set_volume(0.1)
+musica_fondo.play()
 
 bandera_correr = True
 # Se verifica si el usuario cerro la ventana
@@ -107,6 +107,7 @@ while bandera_correr:
                 texto_opcion_2 = fuente_opcion.render(str(opcion_2), True, (COLOR_BLANCO))
                 opcion_3 = lista_opciones_3[posicion]
                 texto_opcion_3 = fuente_opcion.render(str(opcion_3), True, (COLOR_BLANCO))
+                
             if (posicion_click[0] > 144 and posicion_click[0] < 344) and (posicion_click[1] > 244 and posicion_click[1] < 394):
                 print("a")
                 if "a" != respueestas_correctas[posicion]:
@@ -118,6 +119,8 @@ while bandera_correr:
                     posicion += 1
                     texto_puntaje = fuente.render(f"Score: {puntaje}", True, (COLOR_BLANCO))
                     texto_opcion_1 = fuente.render(str(opcion_1), True, COLOR_VERDE)
+                    texto_opcion_2 = fuente_opcion.render(str(opcion_2), True, (COLOR_ROJO))
+                    texto_opcion_3 = fuente_opcion.render(str(opcion_3), True, (COLOR_ROJO))
                     sonido_correcto.play()
                 if oportunidades == 2:
                     posicion += 1
@@ -141,7 +144,9 @@ while bandera_correr:
                     puntaje += 10
                     posicion += 1
                     texto_puntaje = fuente.render(f"Score: {puntaje}", True, (COLOR_BLANCO))
-                    texto_opcion_2 = fuente.render(str(opcion_2), True, COLOR_VERDE)
+                    texto_opcion_1 = fuente.render(str(opcion_1), True, COLOR_ROJO)
+                    texto_opcion_2 = fuente_opcion.render(str(opcion_2), True, (COLOR_VERDE))
+                    texto_opcion_3 = fuente_opcion.render(str(opcion_3), True, (COLOR_ROJO))
                     sonido_correcto.play()
                 if oportunidades == 2:
                     posicion += 1
@@ -164,8 +169,10 @@ while bandera_correr:
                 elif "c" == respueestas_correctas[posicion]:
                     puntaje += 10
                     posicion += 1
-                    texto_puntaje = fuente.render(f"Score: {puntaje}", True, (0, 0, 0))
-                    texto_opcion_3 = fuente.render(str(opcion_3), True, COLOR_VERDE)
+                    texto_puntaje = fuente.render(f"Score: {puntaje}", True, (COLOR_BLANCO))
+                    texto_opcion_1 = fuente.render(str(opcion_1), True, COLOR_ROJO)
+                    texto_opcion_2 = fuente_opcion.render(str(opcion_2), True, (COLOR_ROJO))
+                    texto_opcion_3 = fuente_opcion.render(str(opcion_3), True, (COLOR_VERDE))
                     sonido_correcto.play()
                 if oportunidades == 2:
                     posicion += 1
@@ -194,7 +201,6 @@ while bandera_correr:
                     for event in pygame.event.get():
                         if event.type == pygame.KEYDOWN or event.type == pygame.QUIT:
                             esperando_cierre = False
-
                 bandera_correr = False
                 
             
