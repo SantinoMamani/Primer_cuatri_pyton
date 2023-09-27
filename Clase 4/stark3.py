@@ -16,6 +16,15 @@ from data_stark import lista_personajes
 
 
 def stark_normalizar_datos(lista:list):# normaliza los datos de la lista que se le da como argumento (altura,peso,fuerza)
+    """
+Esta función normaliza los datos en la lista de héroes.
+
+Recibe:
+- lista (list): La lista de héroes a normalizar.
+
+Retorna:
+- bool: True si al menos un dato fue modificado, False en otros casos.
+"""
     dato_modificado = False
     modificado_anteriormente = False
     if modificado_anteriormente == True or lista == [""]:
@@ -44,6 +53,17 @@ def stark_normalizar_datos(lista:list):# normaliza los datos de la lista que se 
 # llamada “nombre”. Caso contrario la función retornara un False
 
 def obtener_dato(dicionario:dict,key:str):#verifica que el diccionario ingresado no este vacio y que el string se igual a "nombre"
+    """
+        Esta función obtiene un dato específico de un diccionario.
+
+        Recibe:
+        - diccionario (dict): El diccionario que representa a un héroe.
+        - key (str): La clave del dato que se desea obtener.
+
+        Retorna:
+        - bool: True si el diccionario no está vacío y contiene la clave "nombre", False en otros casos.
+        """ 
+    
     contador = 0
     if dicionario == {""}:
         return False
@@ -64,6 +84,15 @@ def obtener_dato(dicionario:dict,key:str):#verifica que el diccionario ingresado
 # contrario la función retornara un False
 
 def obtener_nombre(dicionario:dict):#devuelve un string formateado con el nombre
+    """
+        Esta función obtiene el nombre de un héroe.
+
+        Recibe:
+        - diccionario (dict): El diccionario que representa a un héroe.
+
+        Retorna:
+        - str: El nombre del héroe en formato "Nombre: nombre_del_héroe".
+        """
     if dicionario == [""]:
         return False
     if obtener_dato(dicionario,"nombre"):
@@ -88,6 +117,16 @@ def obtener_nombre(dicionario:dict):#devuelve un string formateado con el nombre
 # NOTA: Reutilizar las funciones del punto anterior
 
 def obtener_nombre_y_dato(dicionario:dict,key:str):#decuelve el nombre del heroe y el dato quese pasa por argumento 
+    """
+    Esta función obtiene el nombre y un dato específico de un héroe.
+
+    Recibe:
+    - diccionario (dict): El diccionario que representa a un héroe.
+    - key (str): La clave del dato que se desea obtener.
+
+    Retorna:
+    - str: Una cadena formateada que contiene el nombre del héroe y el dato correspondiente.
+    """
     if dicionario == [""]:
         return False
     return f"{obtener_nombre(dicionario)} | {key}: {dicionario[key]}"
@@ -104,6 +143,16 @@ def obtener_nombre_y_dato(dicionario:dict,key:str):#decuelve el nombre del heroe
 
 
 def obtener_maximo(lista:list,key:str):#verifica que la key reprecente a un numero y devuelve el maximo en float
+    """
+    Esta función obtiene el valor máximo de un dato específico en una lista de héroes.
+
+    Recibe:
+    - lista (list): La lista de héroes.
+    - key (str): La clave del dato a considerar.
+
+    Retorna:
+    - float or False: El valor máximo encontrado o False si la lista está vacía o el dato no es numérico.
+    """
     maximo_float = 0
     if lista == [""]:
         return False
@@ -126,6 +175,16 @@ def obtener_maximo(lista:list,key:str):#verifica que la key reprecente a un nume
 # float retornar el menor que haya encontrado en la búsqueda.
 
 def obtener_minimo(lista:list,key:str):#verifica que la key reprecente a un numero y devuelve el minimo en float
+    """
+    Esta función obtiene el valor mínimo de un dato específico en una lista de héroes.
+
+    Recibe:
+    - lista (list): La lista de héroes.
+    - key (str): La clave del dato a considerar.
+
+    Retorna:
+    - float or False: El valor mínimo encontrado o False si la lista está vacía o el dato no es numérico.
+    """
     primera_ves = True
     if lista == [""]:
         return False
@@ -164,6 +223,17 @@ def obtener_minimo(lista:list,key:str):#verifica que la key reprecente a un nume
 # para altura menor, como la mayor o alguna altura que yo le especifique también.
 
 def obtener_dato_cantidad(lista:list,numero:float,key:str):#devuelve una lista de heros que tengan la mismo dato en comun
+    """
+    Esta función obtiene una lista de héroes que tienen un dato específico en común.
+
+    Recibe:
+    - lista (list): La lista de héroes.
+    - numero (float): El número que se debe buscar en el dato.
+    - key (str): La clave del dato a considerar.
+
+    Retorna:
+    - list: Una lista de héroes que cumplen con la condición dada.
+    """
     lista_heroes = []
     dato_maximo = obtener_maximo(lista,key)
     dato_maximo_p = True
@@ -215,6 +285,12 @@ def obtener_dato_cantidad(lista:list,numero:float,key:str):#devuelve una lista d
 # stark_imprimir_heroes(lista_heroes) -> Imprimo todos los héroes
 
 def stark_imprimir_heroes(lista:list):#imprime la lista que se le pasa como argumento
+    """
+    Esta función imprime la lista de héroes.
+
+    Recibe:
+    - lista (list): La lista de héroes a imprimir.
+    """
     if lista == [""]:
         return False
     print(lista)
@@ -228,6 +304,16 @@ def stark_imprimir_heroes(lista:list):#imprime la lista que se le pasa como argu
 # pasada por parámetro
 
 def sumar_dato_heroe(lista:list,key:str):#devuelve la sumatoria de el la que que se le pase
+    """
+    Devuelve la sumatoria de un dato específico de los héroes en la lista.
+    
+    Args:
+    - lista (list): La lista de héroes en forma de diccionarios.
+    - key (str): La clave del dato que se quiere sumar en cada héroe.
+
+    Returns:
+    - suma (float): La sumatoria del dato específico en todos los héroes de la lista.
+    """
     suma = 0
     for e_lista in lista:
         if isinstance(e_lista, dict):
@@ -244,6 +330,16 @@ def sumar_dato_heroe(lista:list,key:str):#devuelve la sumatoria de el la que que
 # False, caso contrario realizar la división entre los parámetros y retornar el resultado
 
 def dividir(dividendo:int,divisor:int):#devuelve el resultadod e la divicion
+    """
+    Realiza la división de dos números enteros y retorna el resultado.
+
+    Args:
+    - dividendo (int): El número que se va a dividir.
+    - divisor (int): El número por el cual se va a dividir el dividendo.
+
+    Returns:
+    - resultado (float): El resultado de la división si el divisor no es cero, de lo contrario retorna False.
+    """
     resustado = 0
     if divisor == 0:
         return False
@@ -259,6 +355,16 @@ def dividir(dividendo:int,divisor:int):#devuelve el resultadod e la divicion
 # IMPORTANTE: hacer uso de las las funciones creadas en los puntos 4.1 y 4.2
 
 def calcular_promedio(lista:list,key:str):#devolvera el promedo del dato que se quiera sacar
+    """
+    Calcula el promedio de un dato específico de los héroes en la lista.
+    
+    Args:
+    - lista (list): La lista de héroes en forma de diccionarios.
+    - key (str): La clave del dato del héroe del cual se quiere calcular el promedio.
+
+    Returns:
+    - promedio (float): El promedio del dato específico en todos los héroes de la lista.
+    """
     promedio = 0
     cantida = 0
     sumatoria = sumar_dato_heroe(lista,key)
@@ -280,6 +386,16 @@ def calcular_promedio(lista:list,key:str):#devolvera el promedo del dato que se 
 
 
 def mostrar_promedio_dato(lista:list,key:str):#devuelve si la lista esta vacia o  que la key no sea entero o float
+    """
+    Verifica si la lista no está vacía y si el dato en la clave especificada es de tipo int o float.
+
+    Args:
+    - lista (list): La lista de héroes en forma de diccionarios.
+    - key (str): La clave del dato que se quiere verificar en cada héroe.
+
+    Returns:
+    - False si la lista está vacía o el dato en la clave no es de tipo int o float, de lo contrario, no retorna nada.
+    """
     if lista == [""]:
         return False
     else:
@@ -292,6 +408,9 @@ def mostrar_promedio_dato(lista:list,key:str):#devuelve si la lista esta vacia o
 # el cual permite utilizar toda la funcionalidad ya programada.
 
 def imprimir_menu():
+    """
+    Imprime un menú de opciones en pantalla.
+    """
     print("1\n2\n3\n4\n5\n6\n7\n8\n9\n0")
 
 #_________________                  ______________________________          _____________________________         ____________________
@@ -301,6 +420,15 @@ def imprimir_menu():
 # dígitos. Retornara True en caso de serlo, False caso contrario
 
 def validar_entero(string:str):#valida  que el string ingresado sea solo digitos
+    """
+    Verifica si un string contiene solo dígitos.
+
+    Args:
+    - string (str): El string que se quiere verificar.
+
+    Returns:
+    - True si el string contiene solo dígitos, False de lo contrario.
+    """
     if string.isdigit():
         return True
     else:
@@ -315,6 +443,12 @@ def validar_entero(string:str):#valida  que el string ingresado sea solo digitos
 # y 5.2
 
 def stark_menu_principal():
+    """
+    Imprime el menú principal y valida la entrada del usuario.
+
+    Returns:
+    - int: El número ingresado por el usuario si es un número válido, False de lo contrario.
+    """
     imprimir_menu()
     n_ingresado = input("ingrese un numero ")
     if validar_entero(n_ingresado):
@@ -329,6 +463,16 @@ def stark_menu_principal():
 # funciones con prefijo stark_ donde crea correspondiente.
 
 def stark_marvel_app(lista:list):
+    """
+    Función principal que ejecuta el programa y controla el flujo de las opciones del menú.
+
+    Args:
+    - lista (list): La lista de héroes en forma de diccionarios.
+
+    Notes:
+    - Esta función hace uso de varias funciones previamente definidas.
+
+    """
     while True:
         opcion = stark_menu_principal()
         while opcion == False:  
